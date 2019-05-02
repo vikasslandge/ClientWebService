@@ -1,0 +1,736 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProvidersWS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BusDetails">
+          <Key>
+            <PropertyRef Name="BusId" />
+          </Key>
+          <Property Name="BusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BusNo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CityDetails">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CityState" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeedbackDetails">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusId" Type="int" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PassengerDetails">
+          <Key>
+            <PropertyRef Name="PassengerId" />
+          </Key>
+          <Property Name="PassengerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="SeatNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RouteDetails">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusId" Type="int" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="DestinationId" Type="int" Nullable="false" />
+          <Property Name="DateOfJourney" Type="date" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="ArrivalTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="DepartureTime" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeatBookingStatus">
+          <Key>
+            <PropertyRef Name="BusId" />
+            <PropertyRef Name="SeatNo" />
+          </Key>
+          <Property Name="BusId" Type="int" Nullable="false" />
+          <Property Name="SeatNo" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SeatType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TicketDetails">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteId" Type="int" Nullable="false" />
+          <Property Name="TotalSelectedSeats" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FeedbackDetails_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="1" />
+          <End Role="FeedbackDetails" Type="Self.FeedbackDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="FeedbackDetails">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedbackDetails_TicketDetails">
+          <End Role="TicketDetails" Type="Self.TicketDetails" Multiplicity="1" />
+          <End Role="FeedbackDetails" Type="Self.FeedbackDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketDetails">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="FeedbackDetails">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerDetails_TicketDetails">
+          <End Role="TicketDetails" Type="Self.TicketDetails" Multiplicity="1" />
+          <End Role="PassengerDetails" Type="Self.PassengerDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketDetails">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="PassengerDetails">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_CityDetails">
+          <End Role="CityDetails" Type="Self.CityDetails" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDetails">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_CityDetails1">
+          <End Role="CityDetails" Type="Self.CityDetails" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDetails">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeatBookingStatus_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="1" />
+          <End Role="SeatBookingStatus" Type="Self.SeatBookingStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="SeatBookingStatus">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDetails_RouteDetails">
+          <End Role="RouteDetails" Type="Self.RouteDetails" Multiplicity="1" />
+          <End Role="TicketDetails" Type="Self.TicketDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteDetails">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="TicketDetails">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="BookSeat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seatNo" Type="int" Mode="In" />
+          <Parameter Name="busId" Type="int" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ChangeSeatType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seatNo" Type="int" Mode="In" />
+          <Parameter Name="busId" Type="int" Mode="In" />
+          <Parameter Name="seatType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetBookingStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="busId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetBusDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCityDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetPassangerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ticketId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRouteDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sourceId" Type="int" Mode="In" />
+          <Parameter Name="destinationId" Type="int" Mode="In" />
+          <Parameter Name="dateOfJourney" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="ProvidersWS_DBModelStoreContainer">
+          <EntitySet Name="BusDetails" EntityType="Self.BusDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CityDetails" EntityType="Self.CityDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedbackDetails" EntityType="Self.FeedbackDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PassengerDetails" EntityType="Self.PassengerDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RouteDetails" EntityType="Self.RouteDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeatBookingStatus" EntityType="Self.SeatBookingStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketDetails" EntityType="Self.TicketDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FeedbackDetails_BusDetails" Association="Self.FK_FeedbackDetails_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="FeedbackDetails" EntitySet="FeedbackDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedbackDetails_TicketDetails" Association="Self.FK_FeedbackDetails_TicketDetails">
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+            <End Role="FeedbackDetails" EntitySet="FeedbackDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerDetails_TicketDetails" Association="Self.FK_PassengerDetails_TicketDetails">
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+            <End Role="PassengerDetails" EntitySet="PassengerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_BusDetails" Association="Self.FK_RouteDetails_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_CityDetails" Association="Self.FK_RouteDetails_CityDetails">
+            <End Role="CityDetails" EntitySet="CityDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_CityDetails1" Association="Self.FK_RouteDetails_CityDetails1">
+            <End Role="CityDetails" EntitySet="CityDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeatBookingStatus_BusDetails" Association="Self.FK_SeatBookingStatus_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="SeatBookingStatus" EntitySet="SeatBookingStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDetails_RouteDetails" Association="Self.FK_TicketDetails_RouteDetails">
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProvidersWS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BusDetail">
+          <Key>
+            <PropertyRef Name="BusId" />
+          </Key>
+          <Property Name="BusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BusNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="FeedbackDetails" Relationship="Self.FK_FeedbackDetails_BusDetails" FromRole="BusDetails" ToRole="FeedbackDetails" />
+          <NavigationProperty Name="RouteDetails" Relationship="Self.FK_RouteDetails_BusDetails" FromRole="BusDetails" ToRole="RouteDetails" />
+          <NavigationProperty Name="SeatBookingStatus" Relationship="Self.FK_SeatBookingStatus_BusDetails" FromRole="BusDetails" ToRole="SeatBookingStatus" />
+        </EntityType>
+        <EntityType Name="CityDetail">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CityState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="RouteDetails" Relationship="Self.FK_RouteDetails_CityDetails" FromRole="CityDetails" ToRole="RouteDetails" />
+          <NavigationProperty Name="RouteDetails1" Relationship="Self.FK_RouteDetails_CityDetails1" FromRole="CityDetails" ToRole="RouteDetails" />
+        </EntityType>
+        <EntityType Name="FeedbackDetail">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusId" Type="Int32" Nullable="false" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BusDetail" Relationship="Self.FK_FeedbackDetails_BusDetails" FromRole="FeedbackDetails" ToRole="BusDetails" />
+          <NavigationProperty Name="TicketDetail" Relationship="Self.FK_FeedbackDetails_TicketDetails" FromRole="FeedbackDetails" ToRole="TicketDetails" />
+        </EntityType>
+        <EntityType Name="PassengerDetail">
+          <Key>
+            <PropertyRef Name="PassengerId" />
+          </Key>
+          <Property Name="PassengerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="SeatNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TicketDetail" Relationship="Self.FK_PassengerDetails_TicketDetails" FromRole="PassengerDetails" ToRole="TicketDetails" />
+        </EntityType>
+        <EntityType Name="RouteDetail">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusId" Type="Int32" Nullable="false" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="DestinationId" Type="Int32" Nullable="false" />
+          <Property Name="DateOfJourney" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="ArrivalTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="DepartureTime" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="BusDetail" Relationship="Self.FK_RouteDetails_BusDetails" FromRole="RouteDetails" ToRole="BusDetails" />
+          <NavigationProperty Name="CityDetail" Relationship="Self.FK_RouteDetails_CityDetails" FromRole="RouteDetails" ToRole="CityDetails" />
+          <NavigationProperty Name="CityDetail1" Relationship="Self.FK_RouteDetails_CityDetails1" FromRole="RouteDetails" ToRole="CityDetails" />
+          <NavigationProperty Name="TicketDetails" Relationship="Self.FK_TicketDetails_RouteDetails" FromRole="RouteDetails" ToRole="TicketDetails" />
+        </EntityType>
+        <EntityType Name="SeatBookingStatu">
+          <Key>
+            <PropertyRef Name="BusId" />
+            <PropertyRef Name="SeatNo" />
+          </Key>
+          <Property Name="BusId" Type="Int32" Nullable="false" />
+          <Property Name="SeatNo" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SeatType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BusDetail" Relationship="Self.FK_SeatBookingStatus_BusDetails" FromRole="SeatBookingStatus" ToRole="BusDetails" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TicketDetail">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteId" Type="Int32" Nullable="false" />
+          <Property Name="TotalSelectedSeats" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="FeedbackDetails" Relationship="Self.FK_FeedbackDetails_TicketDetails" FromRole="TicketDetails" ToRole="FeedbackDetails" />
+          <NavigationProperty Name="PassengerDetails" Relationship="Self.FK_PassengerDetails_TicketDetails" FromRole="TicketDetails" ToRole="PassengerDetails" />
+          <NavigationProperty Name="RouteDetail" Relationship="Self.FK_TicketDetails_RouteDetails" FromRole="TicketDetails" ToRole="RouteDetails" />
+        </EntityType>
+        <Association Name="FK_FeedbackDetails_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="1" />
+          <End Role="FeedbackDetails" Type="Self.FeedbackDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="FeedbackDetails">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeatBookingStatus_BusDetails">
+          <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="1" />
+          <End Role="SeatBookingStatus" Type="Self.SeatBookingStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusDetails">
+              <PropertyRef Name="BusId" />
+            </Principal>
+            <Dependent Role="SeatBookingStatus">
+              <PropertyRef Name="BusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_CityDetails">
+          <End Role="CityDetails" Type="Self.CityDetail" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDetails">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteDetails_CityDetails1">
+          <End Role="CityDetails" Type="Self.CityDetail" Multiplicity="1" />
+          <End Role="RouteDetails" Type="Self.RouteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDetails">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="RouteDetails">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedbackDetails_TicketDetails">
+          <End Role="TicketDetails" Type="Self.TicketDetail" Multiplicity="1" />
+          <End Role="FeedbackDetails" Type="Self.FeedbackDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketDetails">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="FeedbackDetails">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerDetails_TicketDetails">
+          <End Role="TicketDetails" Type="Self.TicketDetail" Multiplicity="1" />
+          <End Role="PassengerDetails" Type="Self.PassengerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketDetails">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="PassengerDetails">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDetails_RouteDetails">
+          <End Role="RouteDetails" Type="Self.RouteDetail" Multiplicity="1" />
+          <End Role="TicketDetails" Type="Self.TicketDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteDetails">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="TicketDetails">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProvidersWS_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BusDetails" EntityType="Self.BusDetail" />
+          <EntitySet Name="CityDetails" EntityType="Self.CityDetail" />
+          <EntitySet Name="FeedbackDetails" EntityType="Self.FeedbackDetail" />
+          <EntitySet Name="PassengerDetails" EntityType="Self.PassengerDetail" />
+          <EntitySet Name="RouteDetails" EntityType="Self.RouteDetail" />
+          <EntitySet Name="SeatBookingStatus" EntityType="Self.SeatBookingStatu" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TicketDetails" EntityType="Self.TicketDetail" />
+          <AssociationSet Name="FK_FeedbackDetails_BusDetails" Association="Self.FK_FeedbackDetails_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="FeedbackDetails" EntitySet="FeedbackDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_BusDetails" Association="Self.FK_RouteDetails_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeatBookingStatus_BusDetails" Association="Self.FK_SeatBookingStatus_BusDetails">
+            <End Role="BusDetails" EntitySet="BusDetails" />
+            <End Role="SeatBookingStatus" EntitySet="SeatBookingStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_CityDetails" Association="Self.FK_RouteDetails_CityDetails">
+            <End Role="CityDetails" EntitySet="CityDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteDetails_CityDetails1" Association="Self.FK_RouteDetails_CityDetails1">
+            <End Role="CityDetails" EntitySet="CityDetails" />
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedbackDetails_TicketDetails" Association="Self.FK_FeedbackDetails_TicketDetails">
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+            <End Role="FeedbackDetails" EntitySet="FeedbackDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerDetails_TicketDetails" Association="Self.FK_PassengerDetails_TicketDetails">
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+            <End Role="PassengerDetails" EntitySet="PassengerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDetails_RouteDetails" Association="Self.FK_TicketDetails_RouteDetails">
+            <End Role="RouteDetails" EntitySet="RouteDetails" />
+            <End Role="TicketDetails" EntitySet="TicketDetails" />
+          </AssociationSet>
+          <FunctionImport Name="BookSeat">
+            <Parameter Name="seatNo" Mode="In" Type="Int32" />
+            <Parameter Name="busId" Mode="In" Type="Int32" />
+            <Parameter Name="status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeSeatType">
+            <Parameter Name="seatNo" Mode="In" Type="Int32" />
+            <Parameter Name="busId" Mode="In" Type="Int32" />
+            <Parameter Name="seatType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBookingStatus" ReturnType="Collection(ProvidersWS_DBModel.GetBookingStatus_Result)">
+            <Parameter Name="busId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBusDetails" ReturnType="Collection(ProvidersWS_DBModel.GetBusDetails_Result)" />
+          <FunctionImport Name="GetCityDetails" ReturnType="Collection(ProvidersWS_DBModel.GetCityDetails_Result)" />
+          <FunctionImport Name="GetPassangerDetails" ReturnType="Collection(ProvidersWS_DBModel.GetPassangerDetails_Result)">
+            <Parameter Name="ticketId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRouteDetails" ReturnType="Collection(ProvidersWS_DBModel.GetRouteDetails_Result)">
+            <Parameter Name="sourceId" Mode="In" Type="Int32" />
+            <Parameter Name="destinationId" Mode="In" Type="Int32" />
+            <Parameter Name="dateOfJourney" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetBookingStatus_Result">
+          <Property Type="Int32" Name="BusId" Nullable="false" />
+          <Property Type="Int32" Name="SeatNo" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SeatType" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetBusDetails_Result">
+          <Property Type="Int32" Name="BusId" Nullable="false" />
+          <Property Type="String" Name="BusName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BusNo" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetCityDetails_Result">
+          <Property Type="Int32" Name="CityId" Nullable="false" />
+          <Property Type="String" Name="CityName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CityState" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetPassangerDetails_Result">
+          <Property Type="Int32" Name="PassengerId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="String" Name="Gender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="Int32" Name="SeatNo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetRouteDetails_Result">
+          <Property Type="Int32" Name="RouteId" Nullable="false" />
+          <Property Type="Int32" Name="BusId" Nullable="false" />
+          <Property Type="Int32" Name="SourceId" Nullable="false" />
+          <Property Type="Int32" Name="DestinationId" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfJourney" Nullable="false" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Time" Name="ArrivalTime" Nullable="false" />
+          <Property Type="Time" Name="DepartureTime" Nullable="false" />
+          <Property Type="String" Name="BusName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BusNo" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="AvailableSeats" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProvidersWS_DBModelStoreContainer" CdmEntityContainer="ProvidersWS_DBEntities">
+          <EntitySetMapping Name="BusDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.BusDetail">
+              <MappingFragment StoreEntitySet="BusDetails">
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="BusName" ColumnName="BusName" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="BusNo" ColumnName="BusNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.CityDetail">
+              <MappingFragment StoreEntitySet="CityDetails">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityState" ColumnName="CityState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedbackDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.FeedbackDetail">
+              <MappingFragment StoreEntitySet="FeedbackDetails">
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PassengerDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.PassengerDetail">
+              <MappingFragment StoreEntitySet="PassengerDetails">
+                <ScalarProperty Name="PassengerId" ColumnName="PassengerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.RouteDetail">
+              <MappingFragment StoreEntitySet="RouteDetails">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="DateOfJourney" ColumnName="DateOfJourney" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeatBookingStatus">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.SeatBookingStatu">
+              <MappingFragment StoreEntitySet="SeatBookingStatus">
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SeatType" ColumnName="SeatType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketDetails">
+            <EntityTypeMapping TypeName="ProvidersWS_DBModel.TicketDetail">
+              <MappingFragment StoreEntitySet="TicketDetails">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="TotalSelectedSeats" ColumnName="TotalSelectedSeats" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="BookSeat" FunctionName="ProvidersWS_DBModel.Store.BookSeat" />
+          <FunctionImportMapping FunctionImportName="ChangeSeatType" FunctionName="ProvidersWS_DBModel.Store.ChangeSeatType" />
+          <FunctionImportMapping FunctionImportName="GetBookingStatus" FunctionName="ProvidersWS_DBModel.Store.GetBookingStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProvidersWS_DBModel.GetBookingStatus_Result">
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SeatType" ColumnName="SeatType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBusDetails" FunctionName="ProvidersWS_DBModel.Store.GetBusDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProvidersWS_DBModel.GetBusDetails_Result">
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="BusName" ColumnName="BusName" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="BusNo" ColumnName="BusNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCityDetails" FunctionName="ProvidersWS_DBModel.Store.GetCityDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProvidersWS_DBModel.GetCityDetails_Result">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityState" ColumnName="CityState" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPassangerDetails" FunctionName="ProvidersWS_DBModel.Store.GetPassangerDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProvidersWS_DBModel.GetPassangerDetails_Result">
+                <ScalarProperty Name="PassengerId" ColumnName="PassengerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRouteDetails" FunctionName="ProvidersWS_DBModel.Store.GetRouteDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProvidersWS_DBModel.GetRouteDetails_Result">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="BusId" ColumnName="BusId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="DateOfJourney" ColumnName="DateOfJourney" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="BusName" ColumnName="BusName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="BusNo" ColumnName="BusNo" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

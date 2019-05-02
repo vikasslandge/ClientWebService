@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7160304b0e6f4c55aa5bde8f4178a37d" Name="Diagram1">
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.BusDetail" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.CityDetail" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.FeedbackDetail" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.PassengerDetail" Width="1.5" PointX="10.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.RouteDetail" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.SeatBookingStatu" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProvidersWS_DBModel.TicketDetail" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_FeedbackDetails_BusDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_RouteDetails_BusDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_SeatBookingStatus_BusDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_RouteDetails_CityDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_RouteDetails_CityDetails1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_FeedbackDetails_TicketDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_PassengerDetails_TicketDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProvidersWS_DBModel.FK_TicketDetails_RouteDetails" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
