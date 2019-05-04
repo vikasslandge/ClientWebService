@@ -111,5 +111,25 @@ namespace ClientWebService
         {
             return entities.GetPassangerDetails(ticketId).ToArray();
         }
+        
+        [WebMethod]
+        public Boolean AddFeedback(int ticketId,int busId, int rating )
+        {
+            FeedbackDetail feedback = new FeedbackDetail()
+            {
+                 TicketId=ticketId,
+                 BusId=busId,
+                 Rating=rating
+              
+            };
+            entities.FeedbackDetails.Add(feedback);
+            var result = entities.SaveChanges();
+            if (result > 0)
+            {
+                return true;
+
+            }
+            return false;
+        }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProvidersWS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProvidersWS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BusDetails">
           <Key>
             <PropertyRef Name="BusId" />
@@ -30,7 +30,7 @@
           <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BusId" Type="int" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
-          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="PassengerDetails">
           <Key>
@@ -247,8 +247,7 @@
             <End Role="TicketDetails" EntitySet="TicketDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProvidersWS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -497,12 +496,12 @@
             <Parameter Name="seatType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetBookingStatus" ReturnType="Collection(ProvidersWS_DBModel.GetBookingStatus_Result)">
-            <Parameter Name="busId" Mode="In" Type="Int32" />
+          <Parameter Name="busId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBusDetails" ReturnType="Collection(ProvidersWS_DBModel.GetBusDetails_Result)" />
           <FunctionImport Name="GetCityDetails" ReturnType="Collection(ProvidersWS_DBModel.GetCityDetails_Result)" />
           <FunctionImport Name="GetPassangerDetails" ReturnType="Collection(ProvidersWS_DBModel.GetPassangerDetails_Result)">
-            <Parameter Name="ticketId" Mode="In" Type="Int32" />
+          <Parameter Name="ticketId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRouteDetails" ReturnType="Collection(ProvidersWS_DBModel.GetRouteDetails_Result)">
             <Parameter Name="sourceId" Mode="In" Type="Int32" />
@@ -549,7 +548,7 @@
           <Property Type="String" Name="BusName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Type" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="BusNo" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Double" Name="Rating" Nullable="true" />
           <Property Type="Int32" Name="AvailableSeats" Nullable="true" />
         </ComplexType>
       </Schema>

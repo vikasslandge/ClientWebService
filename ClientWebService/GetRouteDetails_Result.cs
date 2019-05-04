@@ -20,11 +20,7 @@ namespace ClientWebService
         public int BusId { get; set; }
         public int SourceId { get; set; }
         public int DestinationId { get; set; }
-        [XmlIgnore]
-        public System.DateTime DateOfJourney { get { return XmlConvert.ToDateTime(DateOfJourney_String, "yyyy-MM-dd"); } set { DateOfJourney_String = XmlConvert.ToString(value, "yyyy-MM-dd"); } }
-        [Browsable(false)]//Hides the property from propertygrid
-        [XmlElement("DateOfJourney")]
-        public string DateOfJourney_String { get; set; }
+        public System.DateTime DateOfJourney { get; set; }
         public double Price { get; set; }
         //Orignal Property
         [XmlIgnore]//this attribute prevents the property from being serializer
@@ -60,7 +56,7 @@ namespace ClientWebService
         public string BusName { get; set; }
         public string Type { get; set; }
         public string BusNo { get; set; }
-        public Nullable<int> Rating { get; set; }
+        public Nullable<double> Rating { get; set; }
         public Nullable<int> AvailableSeats { get; set; }
     }
 }
